@@ -1,6 +1,6 @@
 """Contains functionality related to Weather"""
 import logging
-
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -21,3 +21,9 @@ class Weather:
         # TODO: Process incoming weather messages. Set the temperature and status.
         #
         #
+        weather_data = json.loads(message.value())
+        try:
+            self.temperature = weather_data['temperature']
+            self.status = weather_data['status']
+        except:
+            logger.error("unable to find unpack message from topic %s", message.topic())
